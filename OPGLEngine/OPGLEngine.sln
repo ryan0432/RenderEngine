@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OPGLEngine", "OPGLEngine\OPGLEngine.vcxproj", "{79A2A744-DD1D-4207-AED6-1CA32E078E88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79A2A744-DD1D-4207-AED6-1CA32E078E88}.Debug|x64.ActiveCfg = Debug|x64
+		{79A2A744-DD1D-4207-AED6-1CA32E078E88}.Debug|x64.Build.0 = Debug|x64
+		{79A2A744-DD1D-4207-AED6-1CA32E078E88}.Debug|x86.ActiveCfg = Debug|Win32
+		{79A2A744-DD1D-4207-AED6-1CA32E078E88}.Debug|x86.Build.0 = Debug|Win32
+		{79A2A744-DD1D-4207-AED6-1CA32E078E88}.Release|x64.ActiveCfg = Release|x64
+		{79A2A744-DD1D-4207-AED6-1CA32E078E88}.Release|x64.Build.0 = Release|x64
+		{79A2A744-DD1D-4207-AED6-1CA32E078E88}.Release|x86.ActiveCfg = Release|Win32
+		{79A2A744-DD1D-4207-AED6-1CA32E078E88}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D6BF4395-9B11-4AB8-8869-3D6E09CBE498}
+	EndGlobalSection
+EndGlobal

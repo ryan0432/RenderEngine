@@ -154,7 +154,11 @@
   <ItemGroup>
     <ClCompile Include="..\dependencies\gizmos\Gizmos.cpp" />
     <ClCompile Include="..\dependencies\gl_core\gl_core_4_4.c" />
+    <ClCompile Include="Application.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,10 +1,11 @@
 #include "Application.h"
 #include "gl_core_4_4.h"
+#include "imgui_glfw3.h"
+#include "Input.h"
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <chrono>
 #include <iostream>
-
 
 namespace CORE
 {
@@ -20,6 +21,8 @@ namespace CORE
 		auto success = InitializeWindow(width, height, title, isFullscreen);
 		if (!success)
 		{
+			std::cout << "Window is failed to initialize." << std::endl;
+			system("cls");
 			return -1;
 		}
 
@@ -68,7 +71,7 @@ namespace CORE
 		m_prevFrameTime = m_applicationStartTime;
 
 		glfwSetWindowSizeCallback(m_window, 
-								  [](GLFWwindow*, int w, int h)
+									[](GLFWwindow*, int w, int h)
 										{
 											glViewport(0, 0,w, h); 
 										}
@@ -82,6 +85,11 @@ namespace CORE
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+		// start input manager
+		aie::Input::create();
+
+		aie::ImGui_Init(m_window, true);
+
 		return true;
 
 	}
@@ -90,6 +98,7 @@ namespace CORE
 	{
 		return glfwWindowShouldClose(m_window) == GL_TRUE;
 	}
+
 	void Application::GameLoop()
 	{
 		while (GetRunning())
@@ -102,14 +111,19 @@ namespace CORE
 			auto elapsedTime = now - m_applicationStartTime;
 			m_elapsedTime = std::chrono::duration<float>(elapsedTime).count();
 
+			aie::Input::getInstance()->clearStatus();
+
 			Update();
 			Render();
+			ImGui::Render();
 			glfwPollEvents();
 		}
 	}
 
 	void Application::TerminateWindow()
 	{
+		aie::Input::destroy();
+		aie::ImGui_Shutdown();
 		glfwDestroyWindow(m_window);
 		glfwTerminate();
 	}

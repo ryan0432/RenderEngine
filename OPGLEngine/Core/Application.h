@@ -74,7 +74,6 @@ namespace CORE
 		// Returns current FPS that the app is running at
 		inline unsigned int GetFPS() const { return m_fps; }
 
-
 	protected:
 		virtual bool InitializeWindow(int width, int hight, const char * title,
 									  bool isFullscreen);

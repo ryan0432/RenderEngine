@@ -152,19 +152,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Core\Application.cpp" />
     <ClCompile Include="..\Core\Gizmos.cpp" />
-    <ClCompile Include="..\Core\gl_core_4_4.c" />
     <ClCompile Include="..\Core\imgui_glfw3.cpp" />
     <ClCompile Include="..\Core\Input.cpp" />
+    <ClCompile Include="Application.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Core\Application.h" />
-    <ClInclude Include="..\Core\Gizmos.h" />
-    <ClInclude Include="..\Core\gl_core_4_4.h" />
-    <ClInclude Include="..\Core\imgui_glfw3.h" />
-    <ClInclude Include="..\Core\Input.h" />
+    <ClInclude Include="Application.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

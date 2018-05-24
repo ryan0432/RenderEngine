@@ -8,7 +8,7 @@
 
 struct GLFWwindow;
 
-namespace aie {
+namespace CORE {
 
 IMGUI_API bool        ImGui_Init(GLFWwindow* window, bool install_callbacks);
 IMGUI_API void        ImGui_Shutdown();

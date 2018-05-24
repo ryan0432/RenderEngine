@@ -4,7 +4,7 @@
 #include <glm/ext.hpp>
 #include <iostream>
 
-namespace aie {
+namespace CORE {
 
 Gizmos* Gizmos::sm_singleton = nullptr;
 

@@ -6,7 +6,7 @@
 
 struct GLFWwindow;
 
-namespace aie {
+namespace CORE {
 
 // a giant list of input codes for keyboard and mouse
 enum EInputCodes : int {

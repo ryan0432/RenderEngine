@@ -1,7 +1,7 @@
 #include "Input.h"
 #include <GLFW/glfw3.h>
 
-namespace aie {
+namespace CORE {
 
 Input* Input::m_instance = nullptr;
 

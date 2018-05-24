@@ -2,12 +2,11 @@
 
 #include <glm/fwd.hpp>
 
-namespace aie {
+namespace CORE {
 
 // a singleton class for rendering immediate-mode 3-D primitives
 class Gizmos {
 public:
-
 	static void		create(unsigned int maxLines, unsigned int maxTris,
 						   unsigned int max2DLines, unsigned int max2DTris);
 	static void		destroy();

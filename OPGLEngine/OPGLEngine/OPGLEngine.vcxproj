@@ -70,28 +70,28 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)build\$(Configuration)\$(Platform)</OutDir>
-    <IntDir>$(SolutionDir)temp\$(Configuration)\$(Platform)</IntDir>
+    <OutDir>$(SolutionDir)build\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)temp\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
     <IncludePath>$(SolutionDir)Core;$(SolutionDir)dependencies\imgui;$(SolutionDir)dependencies\gl_core;$(SolutionDir)dependencies\glfw\include;$(SolutionDir)dependencies\stb;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\gizmos;%(AdditionalIncludeDirectories);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dependencies\glfw\lib-vc2017;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)build\$(Configuration)\$(Platform)</OutDir>
-    <IntDir>$(SolutionDir)temp\$(Configuration)\$(Platform)</IntDir>
+    <OutDir>$(SolutionDir)build\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)temp\$(Configuration)\$(Platform)\</IntDir>
     <IncludePath>$(SolutionDir)Core;$(SolutionDir)dependencies\imgui;$(SolutionDir)dependencies\gl_core;$(SolutionDir)dependencies\glfw\include;$(SolutionDir)dependencies\stb;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\gizmos;%(AdditionalIncludeDirectories);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dependencies\glfw\lib-vc2017;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)build\$(Configuration)\$(Platform)</OutDir>
-    <IntDir>$(SolutionDir)temp\$(Configuration)\$(Platform)</IntDir>
+    <OutDir>$(SolutionDir)build\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)temp\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
     <IncludePath>$(SolutionDir)Core;$(SolutionDir)dependencies\imgui;$(SolutionDir)dependencies\glfw\include;$(SolutionDir)dependencies\stb;$(SolutionDir)dependencies\glm;%(AdditionalIncludeDirectories);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dependencies\glfw\lib-vc2017\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)build\$(Configuration)\$(Platform)</OutDir>
-    <IntDir>$(SolutionDir)temp\$(Configuration)\$(Platform)</IntDir>
+    <OutDir>$(SolutionDir)build\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)temp\$(Configuration)\$(Platform)\</IntDir>
     <IncludePath>$(SolutionDir)Core;$(SolutionDir)dependencies\imgui;$(SolutionDir)dependencies\gl_core;$(SolutionDir)dependencies\glfw\include;$(SolutionDir)dependencies\stb;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\gizmos;%(AdditionalIncludeDirectories);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dependencies\glfw\lib-vc2017\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>

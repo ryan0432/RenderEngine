@@ -86,9 +86,9 @@ namespace CORE
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		// start input manager
-		aie::Input::create();
+		Input::create();
 
-		aie::ImGui_Init(m_window, true);
+		ImGui_Init(m_window, true);
 
 		return true;
 
@@ -111,7 +111,7 @@ namespace CORE
 			auto elapsedTime = now - m_applicationStartTime;
 			m_elapsedTime = std::chrono::duration<float>(elapsedTime).count();
 
-			aie::Input::getInstance()->clearStatus();
+			CORE::Input::getInstance()->clearStatus();
 
 			Update();
 			Render();
@@ -122,8 +122,8 @@ namespace CORE
 
 	void Application::TerminateWindow()
 	{
-		aie::Input::destroy();
-		aie::ImGui_Shutdown();
+		CORE::Input::destroy();
+		CORE::ImGui_Shutdown();
 		glfwDestroyWindow(m_window);
 		glfwTerminate();
 	}

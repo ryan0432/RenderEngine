@@ -5,7 +5,7 @@
 #include <iostream>
 #include <Gizmos.h>
 
-using aie::Gizmos;
+using CORE::Gizmos;
 using glm::vec3;
 using glm::vec4;
 using glm::mat3;

@@ -307,8 +307,8 @@ bool ImGui_Init(GLFWwindow* window, bool install_callbacks) {
     io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
 
     io.RenderDrawListsFn = ImGui_RenderDrawLists;       // Alternatively you can set this to NULL and call ImGui::GetDrawData() after ImGui::Render() to get the same ImDrawData pointer.
-    //io.SetClipboardTextFn = ImGui_SetClipboardText;
-    //io.GetClipboardTextFn = ImGui_GetClipboardText;
+    io.SetClipboardTextFn = ImGui_SetClipboardText;
+    io.GetClipboardTextFn = ImGui_GetClipboardText;
 #ifdef _WIN32
     io.ImeWindowHandle = glfwGetWin32Window(g_Window);
 #endif

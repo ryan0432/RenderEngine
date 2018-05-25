@@ -157,6 +157,8 @@
     <ClCompile Include="..\Core\gl_core_4_4.c" />
     <ClCompile Include="..\Core\imgui_glfw3.cpp" />
     <ClCompile Include="..\Core\Input.cpp" />
+    <ClCompile Include="..\dependencies\imgui\imgui.cpp" />
+    <ClCompile Include="..\dependencies\imgui\imgui_draw.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

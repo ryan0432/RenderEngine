@@ -13,31 +13,37 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="CORE">
+      <UniqueIdentifier>{7c1aea69-7d91-4ff1-abad-1e11a34172ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Core\Application.cpp">
+    <ClCompile Include="Application3D.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Core\Application.cpp">
+      <Filter>CORE</Filter>
     </ClCompile>
     <ClCompile Include="..\Core\Gizmos.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>CORE</Filter>
     </ClCompile>
     <ClCompile Include="..\Core\gl_core_4_4.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Core\imgui_glfw3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Core\Input.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>CORE</Filter>
     </ClCompile>
     <ClCompile Include="..\dependencies\imgui\imgui.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>CORE</Filter>
     </ClCompile>
     <ClCompile Include="..\dependencies\imgui\imgui_draw.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>CORE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Core\imgui_glfw3.cpp">
+      <Filter>CORE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Core\Input.cpp">
+      <Filter>CORE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +60,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Core\Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

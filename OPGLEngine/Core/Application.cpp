@@ -87,11 +87,9 @@ namespace CORE
 
 		// start input manager
 		Input::create();
-
 		ImGui_Init(m_window, true);
 
 		return true;
-
 	}
 
 	bool const Application::IsWindowClosed()
@@ -112,10 +110,11 @@ namespace CORE
 			m_elapsedTime = std::chrono::duration<float>(elapsedTime).count();
 
 			CORE::Input::getInstance()->clearStatus();
-
+			ImGui_NewFrame();
 			Update();
 			Render();
 			ImGui::Render();
+			glfwSwapBuffers(m_window);
 			glfwPollEvents();
 		}
 	}

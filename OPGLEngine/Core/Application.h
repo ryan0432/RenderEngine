@@ -24,7 +24,7 @@ namespace CORE
 		// It creates a window based on these settings also calls Update() and Draw()
 		// repeatedly. It calls Startup() at the beginning of the application, if it
 		// succeeds it then starts the  game loop.
-		// It ends with Shutdown() if m_gameOver is true. 
+		// It ends with Shutdown() if m_isRunning is false. 
 		int Run( int width, int height, const char* title, bool isFullscreen, std::string configPath = "");
 		
 		/// The following functions must be implemented by derived class. -----------//

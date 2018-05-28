@@ -283,7 +283,7 @@ void ImGui_InvalidateDeviceObjects() {
 
 bool ImGui_Init(GLFWwindow* window, bool install_callbacks) {
     g_Window = window;
-
+	ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
     io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;                         // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array.
     io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;

@@ -115,6 +115,7 @@ namespace CORE
 			Render();
 			ImGui::Render();
 			glfwSwapBuffers(m_window);
+			m_isRunning = m_isRunning || glfwWindowShouldClose(m_window) == GLFW_TRUE;
 			glfwPollEvents();
 		}
 	}

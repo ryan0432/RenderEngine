@@ -4,6 +4,7 @@
 #include <glm/ext.hpp>
 
 using glm::mat4;
+using glm::vec3;
 
 class Application3D : public CORE::Application
 {
@@ -20,5 +21,13 @@ private:
 	mat4 view;
 	//setup the projection range for Gizmos
 	mat4 projection;
+	//setup the camera transform
+	mat4 camTransform;
+
+	vec3 camPos;
+	vec3 camViewPoint;
+	vec3 camUpAxis;
+
+	float camTransSpd;
 };
 

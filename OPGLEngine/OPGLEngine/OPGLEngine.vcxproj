@@ -160,6 +160,7 @@
     <ClCompile Include="..\dependencies\imgui\imgui.cpp" />
     <ClCompile Include="..\dependencies\imgui\imgui_draw.cpp" />
     <ClCompile Include="Application3D.cpp" />
+    <ClCompile Include="Camera_Base.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +170,7 @@
     <ClInclude Include="..\Core\imgui_glfw3.h" />
     <ClInclude Include="..\Core\Input.h" />
     <ClInclude Include="Application3D.h" />
+    <ClInclude Include="Camera_Base.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

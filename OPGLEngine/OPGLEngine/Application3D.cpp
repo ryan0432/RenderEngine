@@ -27,6 +27,15 @@ bool Application3D::Startup()
 	camViewPoint = vec3(0, 0, 0);
 	camUpAxis = vec3(0, 1 ,0);
 	view = glm::lookAt(camPos, camViewPoint, camUpAxis);
+	//initialize the projection range for Gizmos
+	//projection = glm::perspective(glm::pi<float>() * 0.25f,
+	//	(float)GetWindowWidth() / (float)GetWindowHeight(),
+	//	0.1f, 1000.0f);
+
+	projection = glm::ortho(-50.0f, 50.0f,
+							-30.0f, 30.0f,
+							0.1f, 1000.0f);
+
 	//camera's transform is the inverse of view space transform
 	camTransform = glm::inverse(view);
 	//camera's translation speed
@@ -66,11 +75,11 @@ void Application3D::Update()
 	if (input->isKeyDown(CORE::INPUT_KEY_ESCAPE)) { SetRunning(false); }
 
 	auto&	rgtVec = camTransform[0];
-	vec4	lftVec = camTransform[0] * -1.0f;
+	auto	lftVec = camTransform[0] * -1.0f;
 	auto&	upVec = camTransform[1];
-	vec4	dnVec = camTransform[1] * -1.0f;
+	auto	dnVec = camTransform[1] * -1.0f;
 	auto&	fwardVec = camTransform[2];
-	vec4	bwardVec = camTransform[2] * -1.0f;
+	auto	bwardVec = camTransform[2] * -1.0f;
 	
 	if (input->isKeyDown(CORE::INPUT_KEY_A))
 	{
@@ -120,6 +129,7 @@ void Application3D::Update()
 		}
 	}
 
+	//update the view by inversing camera transform
 	view = glm::inverse(camTransform);
 }
 
@@ -127,10 +137,7 @@ void Application3D::Render()
 {
 	//Clear screen for rendering new frame
 	ClearScreen();
-	//update the projection range for Gizmos
-	projection = glm::perspective(glm::pi<float>() * 0.25f,
-								  (float)GetWindowWidth() / (float)GetWindowHeight(),
-								  0.1f, 1000.0f);
+
 
 	//assign draw area
 	Gizmos::draw(projection * view);

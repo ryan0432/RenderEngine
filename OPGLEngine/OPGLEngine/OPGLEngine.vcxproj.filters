@@ -48,6 +48,9 @@
     <ClCompile Include="Camera_Base.cpp">
       <Filter>CORE</Filter>
     </ClCompile>
+    <ClCompile Include="Camera_Free.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Core\Application.h">
@@ -69,6 +72,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Camera_Base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera_Free.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -161,6 +161,7 @@
     <ClCompile Include="..\dependencies\imgui\imgui_draw.cpp" />
     <ClCompile Include="Application3D.cpp" />
     <ClCompile Include="Camera_Base.cpp" />
+    <ClCompile Include="Camera_Free.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +172,7 @@
     <ClInclude Include="..\Core\Input.h" />
     <ClInclude Include="Application3D.h" />
     <ClInclude Include="Camera_Base.h" />
+    <ClInclude Include="Camera_Free.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

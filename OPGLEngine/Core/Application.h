@@ -29,9 +29,9 @@ namespace CORE
 		
 		/// The following functions must be implemented by derived class. -----------//
 		// Starup() allows clients to do custom initialization.						 //
-		virtual bool Startup()	= 0;												 //
+		virtual bool Startup() = 0;													 //
 		// Update() updates customed contents based on deltaTime.					 //
-		virtual void Update()	= 0;												 //
+		virtual void Update() = 0;													 //
 		// Shutdown() allows clients to clean up created pointers.					 //
 		virtual void Shutdown() = 0;												 //
 		// Render() allows clients to draw objects with a renderer they brought in.	 //

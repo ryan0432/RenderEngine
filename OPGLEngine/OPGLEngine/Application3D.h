@@ -6,6 +6,8 @@
 using glm::mat4;
 using glm::vec3;
 
+class Camera_Free;
+
 class Application3D : public CORE::Application
 {
 public:
@@ -17,17 +19,32 @@ public:
 	virtual void Shutdown();
 
 private:
-	//setup the viewpoint
-	mat4 view;
-	//setup the projection range for Gizmos
-	mat4 projection;
-	//setup the camera transform
-	mat4 camTransform;
 
-	vec3 camPos;
-	vec3 camViewPoint;
-	vec3 camUpAxis;
+#pragma region oldCamDeclaire
+	////setup the viewpoint
+	//mat4 view;
+	////setup the projection range for Gizmos
+	//mat4 projection;
+	////setup the camera transform
+	//mat4 camTransform;
 
-	float camTransSpd;
+	//float camTransSpd;
+#pragma endregion
+
+	std::string m_camName;
+	float m_fovy;
+	float m_aspectRatio;
+	float m_left;
+	float m_right;
+	float m_bottom;
+	float m_top;
+	float m_nearClip;
+	float m_farClip;
+	vec3 m_lookAtFrom;
+	vec3 m_lookAtTo;
+	vec3 m_camUpAxis;
+
+	Camera_Free* myCam;
+
 };
 

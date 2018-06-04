@@ -3,6 +3,7 @@
 
 Camera_Base::Camera_Base()
 {
+
 }
 
 Camera_Base::~Camera_Base()
@@ -18,8 +19,11 @@ void Camera_Base::setPosition(vec3 pos)
 
 void Camera_Base::setPerspective(float fovY, float aspectRatio, float nearClip, float farClip)
 {
+	//Set [Projection Transform] to glm::perspective()
 	m_projectionTransform = glm::perspective(fovY, aspectRatio, nearClip, farClip);
+	//Set camera type enum
 	m_camType = PERSP;
+	//store perspective projection specs in a std::map
 	m_perspSpec["fovY"] = fovY;
 	m_perspSpec["aspectRatio"] = aspectRatio;
 	m_perspSpec["nearClip"] = nearClip;
@@ -29,8 +33,11 @@ void Camera_Base::setPerspective(float fovY, float aspectRatio, float nearClip, 
 void Camera_Base::setOrthography(float left, float right, float bottom, float top,
 								 float nearClip, float farClip)
 {
+	//Set [Projection Transform] to glm::ortho()
 	m_projectionTransform = glm::ortho(left, right, bottom, top, nearClip, farClip);
+	//Set camera type enum
 	m_camType = ORTHO;
+	//Store orthography projection specs in a std::map
 	m_orthoSpec["left"] = left;
 	m_orthoSpec["right"] = right;
 	m_orthoSpec["bottom"] = bottom;
@@ -41,11 +48,13 @@ void Camera_Base::setOrthography(float left, float right, float bottom, float to
 
 void Camera_Base::setLookAt(vec3 lookAtFrom, vec3 lookAtTo, vec3 camUpAxis)
 {
+	//Set View Transform with glm::lookAt()
 	m_viewTransform = glm::lookAt(lookAtFrom, lookAtTo, camUpAxis);
 }
 
 void Camera_Base::switchCamType()
 {
+	//Switch based on current camera type
 	switch (m_camType)
 	{
 		case PERSP:

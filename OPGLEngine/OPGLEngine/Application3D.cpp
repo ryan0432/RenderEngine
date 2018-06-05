@@ -32,11 +32,11 @@ bool Application3D::Startup()
 	m_top = 10.0f;
 	m_nearClip = 0.1f;
 	m_farClip = 1000.0f;
-	m_lookAtFrom = vec3(2.0f, 2.0f, 10.0f);
+	m_lookAtFrom = vec3(0.0f, 0.0f, 10.0f);
 	m_lookAtTo = vec3(0, 0, 0);
 	m_camUpAxis = vec3(0, 1 ,0);
 
-	myCam = new Camera_Free(m_camName, PERSP, m_fovy, m_aspectRatio,
+	myCam = new Camera_Free(m_camName, PERSP, this ,m_fovy ,
 		m_left, m_right, m_bottom, m_top, m_nearClip, m_farClip,
 		m_lookAtFrom, m_lookAtTo, m_camUpAxis);
 

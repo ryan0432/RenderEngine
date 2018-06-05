@@ -1,8 +1,13 @@
+#define GLM_ENABLE_EXPERIMENTAL
 #include "Camera_Free.h"
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/transform.hpp>
+#include "Application.h"
 #include "Input.h"
 
-Camera_Free::Camera_Free(std::string camName, CamType camType,
-						 float fovY, float aspectRatio,
+Camera_Free::Camera_Free(std::string camName, CamType camType, CORE::Application* app,
+						 float fovY, 
 						 float left, float right, float bottom, float top,
 						 float nearClip, float farClip,
 						 vec3 lookAtFrom, vec3 lookAtTo, vec3 camUpAxis)
@@ -10,6 +15,7 @@ Camera_Free::Camera_Free(std::string camName, CamType camType,
 	setName(camName);
 	setPosition(lookAtFrom);
 	setCamType(camType);
+	float aspectRatio = (float)app->GetWindowWidth() / (float)app->GetWindowHeight();
 
 	switch (camType)
 	{
@@ -70,17 +76,58 @@ void Camera_Free::Update(float deltaTime)
 
 	if (input->isKeyDown(CORE::INPUT_KEY_W))
 	{
-		setPosition(getTransform()[3] += upVec * moveSpeed * deltaTime);
+		setPosition(getTransform()[3] += fwardVec * moveSpeed * deltaTime);
 	}
 
 	if (input->isKeyDown(CORE::INPUT_KEY_S))
 	{
-		setPosition(getTransform()[3] += dnVec * moveSpeed * deltaTime);
+		setPosition(getTransform()[3] += bwardVec * moveSpeed * deltaTime);
 	}
 
-	if (input->wasKeyPressed(CORE::INPUT_KEY_G))
+	if (input->wasKeyPressed(CORE::INPUT_KEY_Z))
 	{
 		switchCamType();
+	}
+
+	if (input->isKeyDown(CORE::INPUT_KEY_F))
+	{
+		glm::quat rot(-getTransform()[1] * deltaTime * rotationSpeed);
+		setTransform(glm::mat4_cast(rot) * getTransform());
+	}
+
+	if (input->isKeyDown(CORE::INPUT_KEY_H))
+	{
+		glm::quat rot(getTransform()[1] * deltaTime * rotationSpeed);
+		setTransform(glm::mat4_cast(rot) * getTransform());
+	}
+
+	if (input->isKeyDown(CORE::INPUT_KEY_T))
+	{
+		glm::quat rot(-getTransform()[0] * deltaTime * rotationSpeed);
+		setTransform(glm::mat4_cast(rot) * getTransform());
+	}
+
+	if (input->isKeyDown(CORE::INPUT_KEY_G))
+	{
+		glm::quat rot(getTransform()[0] * deltaTime * rotationSpeed);
+		setTransform(glm::mat4_cast(rot) * getTransform());
+	}
+
+	if (input->isKeyDown(CORE::INPUT_KEY_R))
+	{
+		glm::quat rot(-getTransform()[2] * deltaTime * rotationSpeed);
+		setTransform(glm::mat4_cast(rot) * getTransform());
+	}
+
+	if (input->isKeyDown(CORE::INPUT_KEY_Y))
+	{
+		glm::quat rot(getTransform()[2] * deltaTime * rotationSpeed);
+		setTransform(glm::mat4_cast(rot) * getTransform());
+	}
+
+	if (input->isKeyDown(CORE::INPUT_KEY_LEFT_ALT) || input->isKeyDown(CORE::INPUT_KEY_RIGHT_ALT))
+	{
+
 	}
 
 	updateProjectionView();

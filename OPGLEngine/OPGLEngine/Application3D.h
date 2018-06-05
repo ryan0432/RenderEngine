@@ -19,18 +19,6 @@ public:
 	virtual void Shutdown();
 
 private:
-
-#pragma region oldCamDeclaire
-	////setup the viewpoint
-	//mat4 view;
-	////setup the projection range for Gizmos
-	//mat4 projection;
-	////setup the camera transform
-	//mat4 camTransform;
-
-	//float camTransSpd;
-#pragma endregion
-
 	std::string m_camName;
 	float m_fovy;
 	float m_aspectRatio;

@@ -23,7 +23,7 @@ Application3D::~Application3D()
 
 bool Application3D::Startup()
 {
-	m_camName = "myCam";
+	m_camName = "My Cam";
 	m_fovy = glm::pi<float>() * 0.25f;
 	m_aspectRatio = (float)GetWindowWidth() / (float)GetWindowHeight();
 	m_left = -10.0f;
@@ -32,32 +32,13 @@ bool Application3D::Startup()
 	m_top = 10.0f;
 	m_nearClip = 0.1f;
 	m_farClip = 1000.0f;
-	m_lookAtFrom = vec3(0.0f, 0.0f, 10.0f);
+	m_lookAtFrom = vec3(0.0f, 2.0f, 10.0f);
 	m_lookAtTo = vec3(0, 0, 0);
 	m_camUpAxis = vec3(0, 1 ,0);
 
 	myCam = new Camera_Free(m_camName, PERSP, this ,m_fovy ,
 		m_left, m_right, m_bottom, m_top, m_nearClip, m_farClip,
 		m_lookAtFrom, m_lookAtTo, m_camUpAxis);
-
-#pragma region oldCamInitialize
-
-	//view = glm::lookAt(camPos, camViewPoint, camUpAxis);
-	////initialize the projection range for Gizmos
-	////projection = glm::perspective(glm::pi<float>() * 0.25f,
-	////	(float)GetWindowWidth() / (float)GetWindowHeight(),
-	////	0.1f, 1000.0f);
-
-	//projection = glm::ortho(-50.0f, 50.0f,
-	//						-30.0f, 30.0f,
-	//						0.1f, 1000.0f);
-
-	////camera's transform is the inverse of view space transform
-	//camTransform = glm::inverse(view);
-	////camera's translation speed
-	//camTransSpd = 7.0f;
-
-#pragma endregion
 
 	//Set background colour
 	SetBackgroundColour(0.3f, 0.3f, 0.3f, 1.0f);
@@ -76,11 +57,14 @@ void Application3D::Update()
 	CORE::Input* input = CORE::Input::getInstance();
 	if (input->isKeyDown(CORE::INPUT_KEY_ESCAPE)) { SetRunning(false); }
 
-	myCam->Update(GetDeltaTime());
+	myCam->Update(GetDeltaTime(), this);
 
-	std::cout << "Pos X: " << myCam->getTransform()[3][0] << std::endl;
-	std::cout << "Pos Y: " << myCam->getTransform()[3][1] << std::endl;
-	std::cout << "Pos Z: " << myCam->getTransform()[3][2] << std::endl;
+	std::cout << "Cam Name : " << myCam->getName() << std::endl;
+	std::cout << "Cam Pos X: " << myCam->getTransform()[3][0] << std::endl;
+	std::cout << "        Y: " << myCam->getTransform()[3][1] << std::endl;
+	std::cout << "        Z: " << myCam->getTransform()[3][2] << std::endl;
+	std::cout << "FPS: " << GetFPS() << std::endl;
+	std::cout << "Elapsed Time: " << GetElapsedTime() << std::endl;
 	system("cls");
 
 #pragma region oldCamInput

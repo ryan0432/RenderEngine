@@ -17,12 +17,18 @@
 
 using glm::mat4;
 using glm::vec3;
+using glm::vec4;
 
 enum CamType
 {
 	PERSP,
 	ORTHO
 };
+
+namespace CORE
+{
+	class Application;
+}
 
 class Camera_Base
 {
@@ -35,7 +41,7 @@ public:
 	
 	//Update, needs all derived classes to be inherited.
 	//This fuction will be called in App class.
-	virtual void Update(float deltaTime) = 0;
+	virtual void Update(float deltaTime, CORE::Application* app) = 0;
 
 	//Set camera name
 	inline void setName(std::string camName) { m_camName = camName; }

@@ -72,10 +72,11 @@ namespace CORE
 		inline float GetElapsedTime() const { return m_elapsedTime; }
 
 		// Returns current FPS that the app is running at
-		inline unsigned int GetFPS() const { return m_fps; }
+		float GetFPS() const { return m_fps; }
 
 	protected:
-		virtual bool InitializeWindow(int width, int hight, const char * title,
+		virtual bool InitializeWindow(int width, int hight,
+									  const char * title,
 									  bool isFullscreen);
 
 		virtual void GameLoop();
@@ -90,7 +91,7 @@ namespace CORE
 
 		float			m_deltaTime = 0.0f;
 		float			m_elapsedTime = 0.0f;
-		unsigned int	m_fps = 0;
+		float			m_fps = 0;
 
 		std::chrono::high_resolution_clock::time_point m_applicationStartTime;
 		std::chrono::high_resolution_clock::time_point m_prevFrameTime;

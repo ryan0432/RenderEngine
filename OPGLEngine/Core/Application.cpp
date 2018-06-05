@@ -105,9 +105,12 @@ namespace CORE
 			auto timeTaken = now - m_prevFrameTime;
 			m_deltaTime = std::chrono::duration<float>(timeTaken).count();
 			m_prevFrameTime = now;
-
 			auto elapsedTime = now - m_applicationStartTime;
 			m_elapsedTime = std::chrono::duration<float>(elapsedTime).count();
+
+			float newTime = (int)m_elapsedTime + 1;
+			if (newTime - m_elapsedTime > 0.9f) { m_fps = 1.0f / m_deltaTime; }
+			else { m_fps = m_fps; }
 
 			CORE::Input::getInstance()->clearStatus();
 			ImGui_NewFrame();

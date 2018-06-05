@@ -18,7 +18,7 @@ public:
 				vec3 lookAtFrom, vec3 lookAtTo, vec3 camUpAxis);
 
 	virtual ~Camera_Free();
-	virtual void Update(float deltaTime);
+	virtual void Update(float deltaTime, CORE::Application* app);
 
 private:
 	float moveSpeed;

@@ -3,6 +3,11 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
+#include "Mesh.h"
+#include "OBJMesh.h"
+#include "Shader.h"
+#include "Texture.h"
+
 using glm::mat4;
 using glm::vec3;
 
@@ -31,8 +36,24 @@ private:
 	vec3 m_lookAtFrom;
 	vec3 m_lookAtTo;
 	vec3 m_camUpAxis;
-
 	Camera_Free* myCam;
 
-};
+	Mesh m_mesh01;
+	CORE::ShaderProgram m_shader01;
+	mat4 m_mesh01Transform;
 
+	Mesh m_mesh02;
+	CORE::ShaderProgram m_shader02;
+	mat4 m_mesh02Transform;
+
+	CORE::OBJMesh m_bunnyMesh;
+	CORE::ShaderProgram m_bunnyShader;
+	mat4 m_bunnyTransform;
+
+	CORE::OBJMesh m_spearMesh;
+	CORE::ShaderProgram m_spearShader;
+	CORE::Texture m_spearTexture;
+	mat4 m_spearTransform;
+	
+
+};

@@ -168,6 +168,8 @@ void Camera_Free::Update(float deltaTime, CORE::Application* app)
 
 			setTransform(glm::mat4_cast(rot1) * getTransform());
 			setTransform(glm::mat4_cast(rot0) * getTransform());
+
+			setTransform(mat4(1) * getTransform());
 		}
 
 		if (input->wasMouseButtonPressed(2))
@@ -187,8 +189,8 @@ void Camera_Free::Update(float deltaTime, CORE::Application* app)
 			startMovPosX = newPosX;
 			startMovPosY = newPosY;
 
-			setPosition(getTransform()[3] -= (float)offsetX * rgtVec * 0.2f * deltaTime);
-			setPosition(getTransform()[3] -= (float)offsetY * dnVec * 0.2f * deltaTime);
+			setPosition(getTransform()[3] -= (float)offsetX * rgtVec * 0.15f * deltaTime);
+			setPosition(getTransform()[3] -= (float)offsetY * dnVec * 0.15f * deltaTime);
 		}
 
 		if (input->wasMouseButtonPressed(1))
@@ -208,8 +210,8 @@ void Camera_Free::Update(float deltaTime, CORE::Application* app)
 			startZomPosX = newPosX;
 			startZomPosY = newPosY;
 
-			setPosition(getTransform()[3] -= (float)offsetX * bwardVec * 0.2f * deltaTime);
-			setPosition(getTransform()[3] -= (float)offsetY * fwardVec * 0.2f * deltaTime);
+			setPosition(getTransform()[3] -= (float)offsetX * bwardVec * 0.15f * deltaTime);
+			setPosition(getTransform()[3] -= (float)offsetY * fwardVec * 0.15f * deltaTime);
 		}
 	}
 

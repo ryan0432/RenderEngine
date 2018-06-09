@@ -157,12 +157,16 @@
     <ClCompile Include="..\Core\gl_core_4_4.c" />
     <ClCompile Include="..\Core\imgui_glfw3.cpp" />
     <ClCompile Include="..\Core\Input.cpp" />
+    <ClCompile Include="..\Core\OBJMesh.cpp" />
+    <ClCompile Include="..\Core\Shader.cpp" />
+    <ClCompile Include="..\Core\Texture.cpp" />
     <ClCompile Include="..\dependencies\imgui\imgui.cpp" />
     <ClCompile Include="..\dependencies\imgui\imgui_draw.cpp" />
     <ClCompile Include="Application3D.cpp" />
     <ClCompile Include="Camera_Base.cpp" />
     <ClCompile Include="Camera_Free.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Core\Application.h" />
@@ -170,9 +174,14 @@
     <ClInclude Include="..\Core\gl_core_4_4.h" />
     <ClInclude Include="..\Core\imgui_glfw3.h" />
     <ClInclude Include="..\Core\Input.h" />
+    <ClInclude Include="..\Core\OBJMesh.h" />
+    <ClInclude Include="..\Core\Shader.h" />
+    <ClInclude Include="..\Core\Texture.h" />
+    <ClInclude Include="..\Core\tiny_obj_loader.h" />
     <ClInclude Include="Application3D.h" />
     <ClInclude Include="Camera_Base.h" />
     <ClInclude Include="Camera_Free.h" />
+    <ClInclude Include="Mesh.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <Gizmos.h>
+#include <stdio.h>
 #include "Input.h"
 #include "Camera_Free.h"
 
@@ -23,6 +24,7 @@ Application3D::~Application3D()
 
 bool Application3D::Startup()
 {
+	//Setup Camera Spec
 	m_camName = "My Cam";
 	m_fovy = glm::pi<float>() * 0.25f;
 	m_aspectRatio = (float)GetWindowWidth() / (float)GetWindowHeight();
@@ -36,12 +38,86 @@ bool Application3D::Startup()
 	m_lookAtTo = vec3(0, 0, 0);
 	m_camUpAxis = vec3(0, 1 ,0);
 
+	//Initialize Camera
 	myCam = new Camera_Free(m_camName, PERSP, this ,m_fovy ,
 		m_left, m_right, m_bottom, m_top, m_nearClip, m_farClip,
 		m_lookAtFrom, m_lookAtTo, m_camUpAxis);
 
+	//Initialize Shader
+	//1. load vertex shader from file
+	m_shader01.loadShader(CORE::eShaderStage::VERTEX, "../bin/shaders/simple.vert");
+	m_shader02.loadShader(CORE::eShaderStage::VERTEX, "../bin/shaders/simple.vert");
+	m_bunnyShader.loadShader(CORE::eShaderStage::VERTEX, "../bin/shaders/bunny.vert");
+	m_spearShader.loadShader(CORE::eShaderStage::VERTEX, "../bin/shaders/spear.vert");
+	//2. load fragment shader from file
+	m_shader01.loadShader(CORE::eShaderStage::FRAGMENT, "../bin/shaders/simple.frag");
+	m_shader02.loadShader(CORE::eShaderStage::FRAGMENT, "../bin/shaders/simple02.frag");
+	m_bunnyShader.loadShader(CORE::eShaderStage::FRAGMENT, "../bin/shaders/bunny.frag");
+	m_spearShader.loadShader(CORE::eShaderStage::FRAGMENT, "../bin/shaders/spear.frag");
+	//3. If fail to load shader files, prompt error message
+	if (m_shader01.link() == false) { printf("Shader Error: %s\n", m_shader01.getLastError()); }
+	if (m_shader02.link() == false) { printf("Shader Error: %s\n", m_shader02.getLastError()); }
+	if (m_bunnyShader.link() == false) { printf("Shader Error: %s\n", m_bunnyShader.getLastError()); return false; }
+	if (m_spearShader.link() == false) { printf("Shader Error: %s\n", m_spearShader.getLastError()); return false; }
+
+	//4. If loading Obj file fails, prompt error message
+	if (m_bunnyMesh.load("../bin/models/stanford/bunny.obj") == false) { printf("Loading Bunny Mesh Error!\n"); return false; }
+	if (m_spearMesh.load("../bin/models/soulspear/soulspear.obj", true, true) == false) { printf("Loading Spear Mesh Error!\n"); return false; }
+
+	//5. If loading Texture files fails, prompt error message
+	if (m_spearTexture.load("../bin/models/soulspear/soulspear_diffuse.tga") == false) { printf("Loading Spear Texture Error!\n"); return false; }
+
+	//Initialize mesh Quad
+	m_mesh01.initialiseQuad();
+	//Set mesh size
+	m_mesh01Transform = {  5,  0,  0,  0,
+						   0,  5,  0,  0,
+						   0,  0,  5,  0,
+						   0,  3,  0,  1 };
+
+	Mesh::Vertex vertices[12];
+
+	vertices[0].position = { -0.5f, 0.5f, 0.5f, 1 };
+	vertices[1].position = { 0.5f, 0.5f, 0.5f, 1 };
+	vertices[2].position = { -0.5f, 0.5f, -0.5f, 1 };
+
+	vertices[3].position = { -0.5f, 0.5f, -0.5f, 1 };
+	vertices[4].position = { 0.5f, 0.5f, 0.5f, 1 };
+	vertices[5].position = { 0.5f, 0.5f, -0.5f, 1 };
+
+	vertices[6].position = { -0.5f, -0.5f, 0.5f, 1 };
+	vertices[7].position = { 0.5f, -0.5f, 0.5f, 1 };
+	vertices[8].position = { -0.5f, -0.5f, -0.5f, 1 };
+
+	vertices[9].position = { -0.5f, -0.5f, -0.5f, 1 };
+	vertices[10].position = { 0.5f, -0.5f, 0.5f, 1 };
+	vertices[11].position = { 0.5f, -0.5f, -0.5f, 1 };
+
+	m_mesh02.initialize(12, vertices);
+
+	m_mesh02Transform = { 3,  0,  0,  0,
+						  0,  3,  0,  0,
+						  0,  0,  3,  0,
+						  2,  0,  0,  1 };
+
+	//Initialize bunny transfrom
+	m_bunnyTransform = { 0.2f,  0,  0,  0,
+						 0,  0.2f,  0,  0,
+						 0,  0,  0.2f,  0,
+						-1,  0,  0,  1 };
+
+	//Initialize spear transfrom
+	m_spearTransform = { 1,  0,  0,  0,
+						 0,  1,  0,  0,
+						 0,  0,  1,  0,
+						-5,  0,  0,  1 };
+	
+	
+
+
 	//Set background colour
 	SetBackgroundColour(0.3f, 0.3f, 0.3f, 1.0f);
+
 	//Setup the Gimos's min/max drawing ability
 	Gizmos::create(50000, 50000, 50000, 50000);
 
@@ -50,9 +126,6 @@ bool Application3D::Startup()
 
 void Application3D::Update()
 {
-	//Clear screen for rendering new frame
-	ClearScreen();
-
 	//Input Section
 	CORE::Input* input = CORE::Input::getInstance();
 	if (input->isKeyDown(CORE::INPUT_KEY_ESCAPE)) { SetRunning(false); }
@@ -66,74 +139,13 @@ void Application3D::Update()
 	std::cout << "FPS: " << GetFPS() << std::endl;
 	std::cout << "Elapsed Time: " << GetElapsedTime() << std::endl;
 	system("cls");
-
-#pragma region oldCamInput
-
-	//auto&	rgtVec = camTransform[0];
-	//auto	lftVec = camTransform[0] * -1.0f;
-	//auto&	upVec = camTransform[1];
-	//auto	dnVec = camTransform[1] * -1.0f;
-	//auto&	fwardVec = camTransform[2];
-	//auto	bwardVec = camTransform[2] * -1.0f;
-
-	//if (input->isKeyDown(CORE::INPUT_KEY_A))
-	//{
-	//	camTransform[3] += lftVec * camTransSpd * GetDeltaTime();
-	//}
-
-	//if (input->isKeyDown(CORE::INPUT_KEY_D))
-	//{
-	//	camTransform[3] += rgtVec * camTransSpd * GetDeltaTime();
-	//}
-
-	//if (input->isKeyDown(CORE::INPUT_KEY_W))
-	//{
-	//	camTransform[3] += upVec * camTransSpd * GetDeltaTime();
-	//}
-
-	//if (input->isKeyDown(CORE::INPUT_KEY_S))
-	//{
-	//	camTransform[3] += dnVec * camTransSpd * GetDeltaTime();
-	//}
-
-	//static double startXpos;
-	//static double startYPos;
-
-	//if (input->isKeyDown(CORE::INPUT_KEY_LEFT_ALT))
-	//{
-	//	if (input->wasMouseButtonPressed(0))
-	//	{
-	//		glfwGetCursorPos(GetWindowPtr(), &startXpos, &startYPos);
-	//	}
-	//	else if (input->isMouseButtonDown(0))
-	//	{
-	//		double xpos, ypos;
-	//		glfwGetCursorPos(GetWindowPtr(), &xpos, &ypos);
-
-	//		double xOffset = xpos - startXpos;
-	//		double yOffset = ypos - startYPos;
-
-	//		startXpos = xpos;
-	//		startYPos = ypos;
-
-	//		std::cout << xOffset << " " << yOffset << std::endl;
-
-	//		auto rotX = glm::angleAxis(0.1f * (float)xOffset * GetDeltaTime(), glm::vec3{ 0, 1, 0 });
-	//		auto rotY = glm::angleAxis(0.1f * (float)yOffset * GetDeltaTime(), glm::vec3{ 1, 0, 0 });
-
-	//		camTransform = camTransform * glm::mat4_cast(rotX * rotY);
-	//	}
-	//}
-
-	////update the view by inversing camera transform
-	//view = glm::inverse(camTransform);
-
-#pragma endregion
-
 }
 
 void Application3D::Render()
 {
+	//Clear screen for rendering new frame
+	ClearScreen();
+
 	//clear Gizmos buffer every frame
 	Gizmos::clear();
 
@@ -152,6 +164,28 @@ void Application3D::Render()
 		Gizmos::addLine(vec3(-10 + i, 0, 10), vec3(-10 + i, 0, -10), i == 10 ? white : black);
 		Gizmos::addLine(vec3(10, 0, -10 + i), vec3(-10, 0, -10 + i), i == 10 ? white : black);
 	}
+
+	m_shader01.bind();
+	auto pvmMesh01 = myCam->getProjectionView() * m_mesh01Transform;
+	m_shader01.bindUniform("ProjectionViewModel", pvmMesh01);
+	m_mesh01.draw();
+
+	m_shader02.bind();
+	auto pvmMesh02 = myCam->getProjectionView() * m_mesh02Transform;
+	m_shader02.bindUniform("ProjectionViewModel", pvmMesh02);
+	m_mesh02.draw();
+
+	m_bunnyShader.bind();
+	auto pvmBunnyMesh = myCam->getProjectionView() * m_bunnyTransform;
+	m_bunnyShader.bindUniform("ProjectionViewModel", pvmBunnyMesh);
+	m_bunnyMesh.draw();
+
+	m_spearShader.bind();
+	auto pvmSpearMesh = myCam->getProjectionView() * m_spearTransform;
+	m_spearShader.bindUniform("ProjectionViewModel", pvmSpearMesh);
+	m_spearShader.bindUniform("diffuseTexture", 0);
+	m_spearTexture.bind(0);
+	m_spearMesh.draw();
 
 	//assign draw area
 	Gizmos::draw(myCam->Render());

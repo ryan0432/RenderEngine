@@ -1,5 +1,14 @@
-#pragma once
 
+//------------------------------------------------------//
+//														//
+// Name: Shader.h										//
+//														//
+// Desc: This class is provided by AIE Bootstrap.		//
+//		 Namespace is changed for naming consistency	//
+//														//
+//------------------------------------------------------//
+
+#pragma once
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>

@@ -1,3 +1,13 @@
+
+//------------------------------------------------------//
+//														//
+// Name: Gizmos.h										//
+//														//
+// Desc: This class is provided by AIE Bootstrap.		//
+//		 Namespace is changed for naming consistency.	//
+//														//
+//------------------------------------------------------//
+
 #pragma once
 
 #include <glm/fwd.hpp>

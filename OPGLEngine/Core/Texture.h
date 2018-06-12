@@ -1,5 +1,14 @@
-#pragma once
 
+//------------------------------------------------------//
+//														//
+// Name: Texture.h										//
+//														//
+// Desc: This class is provided by AIE Bootstrap.		//
+//		 Namespace is changed for naming consistency.	//
+//														//
+//------------------------------------------------------//
+
+#pragma once
 #include <string>
 
 namespace CORE {

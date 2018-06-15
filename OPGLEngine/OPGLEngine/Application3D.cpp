@@ -46,7 +46,7 @@ bool Application3D::Startup()
 	//Initialize Shader
 	//1. load vertex shader from file
 	m_shader01.loadShader(CORE::eShaderStage::VERTEX, "../bin/shaders/simple.vert");
-	m_shader02.loadShader(CORE::eShaderStage::VERTEX, "../bin/shaders/simple.vert");
+	m_shader02.loadShader(CORE::eShaderStage::VERTEX, "../bin/shaders/simple02.vert");
 	m_bunnyShader.loadShader(CORE::eShaderStage::VERTEX, "../bin/shaders/bunny.vert");
 	m_spearShader.loadShader(CORE::eShaderStage::VERTEX, "../bin/shaders/spear.vert");
 	//2. load fragment shader from file
@@ -66,6 +66,7 @@ bool Application3D::Startup()
 
 	//5. If loading Texture files fails, prompt error message
 	if (m_spearTexture.load("../bin/models/soulspear/soulspear_diffuse.tga") == false) { printf("Loading Spear Texture Error!\n"); return false; }
+	if (m_gridTexture.load("../bin/models/stanford/UVgrid.jpg") == false) { printf("Loading UVgrid Texture Error!\n"); return false; }
 
 	//Initialize mesh Quad
 	m_mesh01.initialiseQuad();
@@ -73,7 +74,7 @@ bool Application3D::Startup()
 	m_mesh01Transform = {  5,  0,  0,  0,
 						   0,  5,  0,  0,
 						   0,  0,  5,  0,
-						   0,  3,  0,  1 };
+						   2,  0,  0,  1 };
 
 	Mesh::Vertex vertices[12];
 
@@ -92,6 +93,20 @@ bool Application3D::Startup()
 	vertices[9].position = { -0.5f, -0.5f, -0.5f, 1 };
 	vertices[10].position = { 0.5f, -0.5f, 0.5f, 1 };
 	vertices[11].position = { 0.5f, -0.5f, -0.5f, 1 };
+
+	// define 6 normals for 2 triangles
+	vertices[0].normal = { 0, 1, 0, 0 };
+	vertices[1].normal = { 0, 1, 0, 0 };
+	vertices[2].normal = { 0, 1, 0, 0 };
+	vertices[3].normal = { 0, 1, 0, 0 };
+	vertices[4].normal = { 0, 1, 0, 0 };
+	vertices[5].normal = { 0, 1, 0, 0 };
+	vertices[6].normal = { 0, 1, 0, 0 };
+	vertices[7].normal = { 0, 1, 0, 0 };
+	vertices[8].normal = { 0, 1, 0, 0 };
+	vertices[9].normal = { 0, 1, 0, 0 };
+	vertices[10].normal = { 0, 1, 0, 0 };
+	vertices[11].normal = { 0, 1, 0, 0 };
 
 	m_mesh02.initialize(12, vertices);
 
@@ -112,7 +127,12 @@ bool Application3D::Startup()
 						 0,  0,  1,  0,
 						-5,  0,  0,  1 };
 	
-	
+
+	//Setup Light and AmbientLight
+	m_light01.direction = {1, 1, 1 };
+	m_light01.diffuse = { 1, 1, 0 };
+	m_light01.specular = { 1, 1, 0 };
+	m_ambientLight01 = { 0.25f, 0.25f, 0.25f };
 
 
 	//Set background colour
@@ -129,6 +149,9 @@ void Application3D::Update()
 	//Input Section
 	CORE::Input* input = CORE::Input::getInstance();
 	if (input->isKeyDown(CORE::INPUT_KEY_ESCAPE)) { SetRunning(false); }
+
+	m_light01.direction = glm::normalize(vec3(0, glm::sin(GetElapsedTime() * 2),
+											  glm::cos(GetElapsedTime() * 2)));
 
 	myCam->Update(GetDeltaTime(), this);
 
@@ -166,18 +189,36 @@ void Application3D::Render()
 	}
 
 	m_shader01.bind();
+	m_shader01.bindUniform("LightDirection", m_light01.direction);
 	auto pvmMesh01 = myCam->getProjectionView() * m_mesh01Transform;
 	m_shader01.bindUniform("ProjectionViewModel", pvmMesh01);
+	m_shader01.bindUniform("NormalMatrix",
+						glm::inverseTranspose(mat3(m_mesh01Transform)));
+	m_shader01.bindUniform("diffuseTexture", 0);
+	m_gridTexture.bind(0);
 	m_mesh01.draw();
 
 	m_shader02.bind();
+	m_shader02.bindUniform("Ia", m_ambientLight01);
+	m_shader02.bindUniform("Id", m_light01.diffuse);
+	m_shader02.bindUniform("Is", m_light01.specular);
+	m_shader02.bindUniform("LightDirection", m_light01.direction);
 	auto pvmMesh02 = myCam->getProjectionView() * m_mesh02Transform;
 	m_shader02.bindUniform("ProjectionViewModel", pvmMesh02);
+	m_shader02.bindUniform("NormalMatrix",
+						glm::inverseTranspose(mat3(m_mesh02Transform)));
 	m_mesh02.draw();
 
 	m_bunnyShader.bind();
+	m_bunnyShader.bindUniform("Ia", m_ambientLight01);
+	m_bunnyShader.bindUniform("Id", m_light01.diffuse);
+	m_bunnyShader.bindUniform("Is", m_light01.specular);
+	m_bunnyShader.bindUniform("cameraPosition", myCam->getPosition());
+	m_bunnyShader.bindUniform("LightDirection", m_light01.direction);
 	auto pvmBunnyMesh = myCam->getProjectionView() * m_bunnyTransform;
 	m_bunnyShader.bindUniform("ProjectionViewModel", pvmBunnyMesh);
+	m_bunnyShader.bindUniform("NormalMatrix",
+						glm::inverseTranspose(mat3(m_bunnyTransform)));
 	m_bunnyMesh.draw();
 
 	m_spearShader.bind();

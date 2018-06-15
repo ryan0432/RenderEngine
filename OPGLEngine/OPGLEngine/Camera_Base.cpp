@@ -52,6 +52,14 @@ void Camera_Base::setLookAt(vec3 lookAtFrom, vec3 lookAtTo, vec3 camUpAxis)
 	m_viewTransform = glm::lookAt(lookAtFrom, lookAtTo, camUpAxis);
 }
 
+vec3 Camera_Base::getPosition()
+{
+	vec3 pos = {m_camTransform[3][0],
+				m_camTransform[3][1],
+				m_camTransform[3][2]};
+	return pos;
+}
+
 void Camera_Base::switchCamType()
 {
 	//Switch based on current camera type

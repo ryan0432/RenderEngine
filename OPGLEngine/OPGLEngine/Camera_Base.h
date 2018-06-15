@@ -65,6 +65,9 @@ public:
 	//Returns camera name (std::string)
 	inline std::string getName() { return m_camName; }
 
+	//Returns camera position (vec3)
+	vec3 getPosition();
+
 	//Returns camera type (Enum CamType)
 	inline CamType getCamType() { return m_camType; }
 

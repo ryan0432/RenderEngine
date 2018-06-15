@@ -23,6 +23,14 @@ public:
 	virtual void Render();
 	virtual void Shutdown();
 
+protected:
+	struct Light
+	{
+		vec3 direction;
+		vec3 diffuse;
+		vec3 specular;
+	};
+
 private:
 	std::string m_camName;
 	float m_fovy;
@@ -40,6 +48,7 @@ private:
 
 	Mesh m_mesh01;
 	CORE::ShaderProgram m_shader01;
+	CORE::Texture m_gridTexture;
 	mat4 m_mesh01Transform;
 
 	Mesh m_mesh02;
@@ -54,6 +63,8 @@ private:
 	CORE::ShaderProgram m_spearShader;
 	CORE::Texture m_spearTexture;
 	mat4 m_spearTransform;
-	
 
+	Light m_light01;
+	vec3 m_ambientLight01;
+	
 };

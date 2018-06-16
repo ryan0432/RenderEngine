@@ -65,7 +65,8 @@ bool Application3D::Startup()
 	if (m_spearMesh.load("../bin/models/soulspear/soulspear.obj", true, true) == false) { printf("Loading Spear Mesh Error!\n"); return false; }
 
 	//5. If loading Texture files fails, prompt error message
-	if (m_spearTexture.load("../bin/models/soulspear/soulspear_diffuse.tga") == false) { printf("Loading Spear Texture Error!\n"); return false; }
+	//if (m_spearDTexture.load("../bin/models/soulspear/soulspear_diffuse.tga") == false) { printf("Loading Spear Diffuse Texture Error!\n"); return false; }
+	//if (m_spearSTexture.load("../bin/models/soulspear/soulspear_specular.tga") == false) { printf("Loading Spear Specular Texture Error!\n"); return false; }
 	if (m_gridTexture.load("../bin/models/stanford/UVgrid.jpg") == false) { printf("Loading UVgrid Texture Error!\n"); return false; }
 
 	//Initialize mesh Quad
@@ -129,10 +130,10 @@ bool Application3D::Startup()
 	
 
 	//Setup Light and AmbientLight
-	m_light01.direction = {1, 1, 1 };
-	m_light01.diffuse = { 1, 1, 0 };
-	m_light01.specular = { 1, 1, 0 };
-	m_ambientLight01 = { 0.25f, 0.25f, 0.25f };
+	m_light01.direction = { 1, 1, 1 };
+	m_light01.diffuse = { 1, 1, 1 };
+	m_light01.specular = { 1, 1, 1 };
+	m_ambientLight01 = { 0.75f, 0.75f, 0.75f };
 
 
 	//Set background colour
@@ -150,8 +151,8 @@ void Application3D::Update()
 	CORE::Input* input = CORE::Input::getInstance();
 	if (input->isKeyDown(CORE::INPUT_KEY_ESCAPE)) { SetRunning(false); }
 
-	m_light01.direction = glm::normalize(vec3(0, glm::sin(GetElapsedTime() * 2),
-											  glm::cos(GetElapsedTime() * 2)));
+	//m_light01.direction = glm::normalize(vec3(0, glm::sin(GetElapsedTime() * 2), glm::cos(GetElapsedTime() * 2)));
+	m_light01.direction = glm::normalize(vec3(2, -2 , -1));
 
 	myCam->Update(GetDeltaTime(), this);
 
@@ -189,6 +190,9 @@ void Application3D::Render()
 	}
 
 	m_shader01.bind();
+	m_shader01.bindUniform("Ia", m_ambientLight01);
+	m_shader01.bindUniform("Id", m_light01.diffuse);
+	m_shader01.bindUniform("Is", m_light01.specular);
 	m_shader01.bindUniform("LightDirection", m_light01.direction);
 	auto pvmMesh01 = myCam->getProjectionView() * m_mesh01Transform;
 	m_shader01.bindUniform("ProjectionViewModel", pvmMesh01);
@@ -202,6 +206,10 @@ void Application3D::Render()
 	m_shader02.bindUniform("Ia", m_ambientLight01);
 	m_shader02.bindUniform("Id", m_light01.diffuse);
 	m_shader02.bindUniform("Is", m_light01.specular);
+	//m_shader02.bindUniform("Ka", Ka);
+	//m_shader02.bindUniform("Kd", Kd);
+	//m_shader02.bindUniform("Ks", Ks);
+	//m_shader02.bindUniform("cameraPosition", myCam->getPosition());
 	m_shader02.bindUniform("LightDirection", m_light01.direction);
 	auto pvmMesh02 = myCam->getProjectionView() * m_mesh02Transform;
 	m_shader02.bindUniform("ProjectionViewModel", pvmMesh02);
@@ -222,10 +230,19 @@ void Application3D::Render()
 	m_bunnyMesh.draw();
 
 	m_spearShader.bind();
+	m_spearShader.bindUniform("Ia", m_ambientLight01);
+	m_spearShader.bindUniform("Id", m_light01.diffuse);
+	m_spearShader.bindUniform("Is", m_light01.specular);
+	m_spearShader.bindUniform("cameraPosition", myCam->getPosition());
+	m_spearShader.bindUniform("LightDirection", m_light01.direction);
 	auto pvmSpearMesh = myCam->getProjectionView() * m_spearTransform;
 	m_spearShader.bindUniform("ProjectionViewModel", pvmSpearMesh);
+	m_spearShader.bindUniform("NormalMatrix",
+						glm::inverseTranspose(mat3(m_spearTransform)));
 	m_spearShader.bindUniform("diffuseTexture", 0);
-	m_spearTexture.bind(0);
+	m_spearDTexture.bind(0);
+	m_spearShader.bindUniform("specularTexture", 1);
+	m_spearSTexture.bind(1);
 	m_spearMesh.draw();
 
 	//assign draw area

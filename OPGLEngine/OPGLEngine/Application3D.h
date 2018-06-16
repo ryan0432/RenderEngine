@@ -54,6 +54,10 @@ private:
 	Mesh m_mesh02;
 	CORE::ShaderProgram m_shader02;
 	mat4 m_mesh02Transform;
+	//vec3 Ka = { 1,1,0 };
+	//vec3 Kd = { 0,1,0 };
+	//vec3 Ks = { 0,1,1 };
+
 
 	CORE::OBJMesh m_bunnyMesh;
 	CORE::ShaderProgram m_bunnyShader;
@@ -61,10 +65,10 @@ private:
 
 	CORE::OBJMesh m_spearMesh;
 	CORE::ShaderProgram m_spearShader;
-	CORE::Texture m_spearTexture;
+	CORE::Texture m_spearDTexture;
+	CORE::Texture m_spearSTexture;
 	mat4 m_spearTransform;
 
 	Light m_light01;
 	vec3 m_ambientLight01;
-	
 };

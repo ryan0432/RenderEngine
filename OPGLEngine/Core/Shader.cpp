@@ -111,8 +111,12 @@ void ShaderProgram::attachShader(const std::shared_ptr<Shader>& shader) {
 bool ShaderProgram::link() {
 	m_program = glCreateProgram();
 	for (auto& s : m_shaders)
+	{
 		if (s != nullptr)
+		{
 			glAttachShader(m_program, s->getHandle());
+		}
+	}
 	glLinkProgram(m_program);
 
 	int success = GL_TRUE;

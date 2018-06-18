@@ -50,13 +50,16 @@ private:
 	CORE::ShaderProgram m_shader01;
 	CORE::Texture m_gridTexture;
 	mat4 m_mesh01Transform;
+	vec3 mesh01Ka = { 1,1,0 };
+	vec3 mesh01Kd = { 0,1,0 };
+	vec3 mesh01Ks = { 0,1,1 };
 
 	Mesh m_mesh02;
 	CORE::ShaderProgram m_shader02;
 	mat4 m_mesh02Transform;
-	//vec3 Ka = { 1,1,0 };
-	//vec3 Kd = { 0,1,0 };
-	//vec3 Ks = { 0,1,1 };
+	vec3 mesh02Ka = { 1,1,0 };
+	vec3 mesh02Kd = { 0,1,0 };
+	vec3 mesh02Ks = { 0,1,1 };
 
 
 	CORE::OBJMesh m_bunnyMesh;

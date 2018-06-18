@@ -151,8 +151,8 @@ void Application3D::Update()
 	CORE::Input* input = CORE::Input::getInstance();
 	if (input->isKeyDown(CORE::INPUT_KEY_ESCAPE)) { SetRunning(false); }
 
-	//m_light01.direction = glm::normalize(vec3(0, glm::sin(GetElapsedTime() * 2), glm::cos(GetElapsedTime() * 2)));
-	m_light01.direction = glm::normalize(vec3(2, -2 , -1));
+	m_light01.direction = glm::normalize(vec3(0, glm::sin(GetElapsedTime() * 2), glm::cos(GetElapsedTime() * 2)));
+	//m_light01.direction = glm::normalize(vec3(2, -2 , -1));
 
 	myCam->Update(GetDeltaTime(), this);
 
@@ -193,7 +193,12 @@ void Application3D::Render()
 	m_shader01.bindUniform("Ia", m_ambientLight01);
 	m_shader01.bindUniform("Id", m_light01.diffuse);
 	m_shader01.bindUniform("Is", m_light01.specular);
+	m_shader01.bindUniform("Ka", mesh01Ka);
+	m_shader01.bindUniform("Kd", mesh01Kd);
+	m_shader01.bindUniform("Ks", mesh01Ks);
+	m_shader01.bindUniform("ModelMatrix", m_mesh01Transform);
 	m_shader01.bindUniform("LightDirection", m_light01.direction);
+	m_shader01.bindUniform("cameraPosition", myCam->getPosition());
 	auto pvmMesh01 = myCam->getProjectionView() * m_mesh01Transform;
 	m_shader01.bindUniform("ProjectionViewModel", pvmMesh01);
 	m_shader01.bindUniform("NormalMatrix",
@@ -206,10 +211,11 @@ void Application3D::Render()
 	m_shader02.bindUniform("Ia", m_ambientLight01);
 	m_shader02.bindUniform("Id", m_light01.diffuse);
 	m_shader02.bindUniform("Is", m_light01.specular);
-	//m_shader02.bindUniform("Ka", Ka);
-	//m_shader02.bindUniform("Kd", Kd);
-	//m_shader02.bindUniform("Ks", Ks);
-	//m_shader02.bindUniform("cameraPosition", myCam->getPosition());
+	m_shader02.bindUniform("Ka", mesh02Ka);
+	m_shader02.bindUniform("Kd", mesh02Kd);
+	m_shader02.bindUniform("Ks", mesh02Ks);
+	m_shader02.bindUniform("ModelMatrix", m_mesh02Transform);
+	m_shader02.bindUniform("cameraPosition", myCam->getPosition());
 	m_shader02.bindUniform("LightDirection", m_light01.direction);
 	auto pvmMesh02 = myCam->getProjectionView() * m_mesh02Transform;
 	m_shader02.bindUniform("ProjectionViewModel", pvmMesh02);

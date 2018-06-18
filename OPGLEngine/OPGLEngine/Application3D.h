@@ -26,6 +26,7 @@ public:
 protected:
 	struct Light
 	{
+		vec3 position;
 		vec3 direction;
 		vec3 diffuse;
 		vec3 specular;
@@ -73,5 +74,6 @@ private:
 	mat4 m_spearTransform;
 
 	Light m_light01;
+	Light m_light02;
 	vec3 m_ambientLight01;
 };

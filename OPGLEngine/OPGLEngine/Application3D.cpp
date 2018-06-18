@@ -65,8 +65,8 @@ bool Application3D::Startup()
 	if (m_spearMesh.load("../bin/models/soulspear/soulspear.obj", true, true) == false) { printf("Loading Spear Mesh Error!\n"); return false; }
 
 	//5. If loading Texture files fails, prompt error message
-	//if (m_spearDTexture.load("../bin/models/soulspear/soulspear_diffuse.tga") == false) { printf("Loading Spear Diffuse Texture Error!\n"); return false; }
-	//if (m_spearSTexture.load("../bin/models/soulspear/soulspear_specular.tga") == false) { printf("Loading Spear Specular Texture Error!\n"); return false; }
+	if (m_spearDTexture.load("../bin/models/soulspear/soulspear_diffuse.tga") == false) { printf("Loading Spear Diffuse Texture Error!\n"); return false; }
+	if (m_spearSTexture.load("../bin/models/soulspear/soulspear_specular.tga") == false) { printf("Loading Spear Specular Texture Error!\n"); return false; }
 	if (m_gridTexture.load("../bin/models/stanford/UVgrid.jpg") == false) { printf("Loading UVgrid Texture Error!\n"); return false; }
 
 	//Initialize mesh Quad
@@ -133,6 +133,11 @@ bool Application3D::Startup()
 	m_light01.direction = { 1, 1, 1 };
 	m_light01.diffuse = { 1, 1, 1 };
 	m_light01.specular = { 1, 1, 1 };
+
+	m_light02.direction = { -1, -1, -1 };
+	m_light02.diffuse = { 1, 1, 0 };
+	m_light02.specular = { 1, 0, 1 };
+
 	m_ambientLight01 = { 0.75f, 0.75f, 0.75f };
 
 
@@ -151,8 +156,12 @@ void Application3D::Update()
 	CORE::Input* input = CORE::Input::getInstance();
 	if (input->isKeyDown(CORE::INPUT_KEY_ESCAPE)) { SetRunning(false); }
 
-	m_light01.direction = glm::normalize(vec3(0, glm::sin(GetElapsedTime() * 2), glm::cos(GetElapsedTime() * 2)));
+	m_light01.position = vec3(0, glm::sin(GetElapsedTime() * 2) * 4.0f, glm::cos(GetElapsedTime() * 2) * 4.0f);
+	m_light01.direction = glm::normalize(m_light01.position);
+	m_light02.position = vec3(glm::cos(GetElapsedTime() * -3) * 5.0f, glm::sin(GetElapsedTime() * -3) * 5.0f, 0);
+	m_light02.direction = glm::normalize(m_light02.position);
 	//m_light01.direction = glm::normalize(vec3(2, -2 , -1));
+	//m_light02.direction = glm::normalize(vec3(-2, 0, 1));
 
 	myCam->Update(GetDeltaTime(), this);
 
@@ -188,6 +197,9 @@ void Application3D::Render()
 		Gizmos::addLine(vec3(-10 + i, 0, 10), vec3(-10 + i, 0, -10), i == 10 ? white : black);
 		Gizmos::addLine(vec3(10, 0, -10 + i), vec3(-10, 0, -10 + i), i == 10 ? white : black);
 	}
+
+	Gizmos::addSphere((m_light01.position * -1.0f), 0.3f, 8, 8, vec4(m_light01.diffuse, 1));
+	Gizmos::addSphere((m_light02.position * -1.0f), 0.3f, 8, 8, vec4(m_light02.diffuse, 1));
 
 	m_shader01.bind();
 	m_shader01.bindUniform("Ia", m_ambientLight01);
@@ -225,10 +237,13 @@ void Application3D::Render()
 
 	m_bunnyShader.bind();
 	m_bunnyShader.bindUniform("Ia", m_ambientLight01);
-	m_bunnyShader.bindUniform("Id", m_light01.diffuse);
-	m_bunnyShader.bindUniform("Is", m_light01.specular);
+	m_bunnyShader.bindUniform("Id1", m_light01.diffuse);
+	m_bunnyShader.bindUniform("Is1", m_light01.specular);
+	m_bunnyShader.bindUniform("Id2", m_light02.diffuse);
+	m_bunnyShader.bindUniform("Is2", m_light02.specular);
+	m_bunnyShader.bindUniform("LightDirection01", m_light01.direction);
+	m_bunnyShader.bindUniform("LightDirection02", m_light02.direction);
 	m_bunnyShader.bindUniform("cameraPosition", myCam->getPosition());
-	m_bunnyShader.bindUniform("LightDirection", m_light01.direction);
 	auto pvmBunnyMesh = myCam->getProjectionView() * m_bunnyTransform;
 	m_bunnyShader.bindUniform("ProjectionViewModel", pvmBunnyMesh);
 	m_bunnyShader.bindUniform("NormalMatrix",
@@ -237,10 +252,13 @@ void Application3D::Render()
 
 	m_spearShader.bind();
 	m_spearShader.bindUniform("Ia", m_ambientLight01);
-	m_spearShader.bindUniform("Id", m_light01.diffuse);
-	m_spearShader.bindUniform("Is", m_light01.specular);
+	m_spearShader.bindUniform("Id1", m_light01.diffuse);
+	m_spearShader.bindUniform("Is1", m_light01.specular);
+	m_spearShader.bindUniform("Id2", m_light02.diffuse);
+	m_spearShader.bindUniform("Is2", m_light02.specular);
 	m_spearShader.bindUniform("cameraPosition", myCam->getPosition());
-	m_spearShader.bindUniform("LightDirection", m_light01.direction);
+	m_spearShader.bindUniform("LightDirection01", m_light01.direction);
+	m_spearShader.bindUniform("LightDirection02", m_light02.direction);
 	auto pvmSpearMesh = myCam->getProjectionView() * m_spearTransform;
 	m_spearShader.bindUniform("ProjectionViewModel", pvmSpearMesh);
 	m_spearShader.bindUniform("NormalMatrix",

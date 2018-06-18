@@ -74,7 +74,7 @@ bool Application3D::Startup()
 	m_mesh01Transform = {  5,  0,  0,  0,
 						   0,  5,  0,  0,
 						   0,  0,  5,  0,
-						   2,  0,  0,  1 };
+						   0,  -1,  0,  1 };
 
 	Mesh::Vertex vertices[12];
 
@@ -113,19 +113,19 @@ bool Application3D::Startup()
 	m_mesh02Transform = { 3,  0,  0,  0,
 						  0,  3,  0,  0,
 						  0,  0,  3,  0,
-						  2,  0,  0,  1 };
+						  0,  0,  -4,  1 };
 
 	//Initialize bunny transfrom
-	m_bunnyTransform = { 0.2f,  0,  0,  0,
-						 0,  0.2f,  0,  0,
-						 0,  0,  0.2f,  0,
-						-1,  0,  0,  1 };
+	m_bunnyTransform = { 0.3f,  0,  0,  0,
+						 0,  0.3f,  0,  0,
+						 0,  0,  0.3f,  0,
+						-1.5f,  0,  0,  1 };
 
 	//Initialize spear transfrom
 	m_spearTransform = { 1,  0,  0,  0,
 						 0,  1,  0,  0,
 						 0,  0,  1,  0,
-						-5,  0,  0,  1 };
+						 1.5f,  0,  0,  1 };
 	
 
 	//Setup Light and AmbientLight

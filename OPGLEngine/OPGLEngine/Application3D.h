@@ -76,4 +76,6 @@ private:
 	Light m_light01;
 	Light m_light02;
 	vec3 m_ambientLight01;
+
+	bool mainWindowStart = true;
 };

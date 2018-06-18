@@ -1,10 +1,9 @@
 #include "Application3D.h"
-#include <gl_core_4_4.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
 #include <Gizmos.h>
 #include <stdio.h>
 #include "Input.h"
+#include "imgui.h"
 #include "Camera_Free.h"
 
 using CORE::Gizmos;
@@ -130,16 +129,18 @@ bool Application3D::Startup()
 	
 
 	//Setup Light and AmbientLight
-	m_light01.direction = { 1, 1, 1 };
+	m_light01.position = { 1, 1, 1 };
 	m_light01.diffuse = { 1, 1, 1 };
 	m_light01.specular = { 1, 1, 1 };
 
-	m_light02.direction = { -1, -1, -1 };
-	m_light02.diffuse = { 1, 1, 0 };
-	m_light02.specular = { 1, 0, 1 };
+	m_light02.position = { -1, -1, -1 };
+	m_light02.diffuse = { 1, 1, 1 };
+	m_light02.specular = { 1, 1, 1 };
 
 	m_ambientLight01 = { 0.75f, 0.75f, 0.75f };
 
+	//Select Imgui style
+	ImGui::StyleColorsDark();
 
 	//Set background colour
 	SetBackgroundColour(0.3f, 0.3f, 0.3f, 1.0f);
@@ -156,12 +157,37 @@ void Application3D::Update()
 	CORE::Input* input = CORE::Input::getInstance();
 	if (input->isKeyDown(CORE::INPUT_KEY_ESCAPE)) { SetRunning(false); }
 
-	m_light01.position = vec3(0, glm::sin(GetElapsedTime() * 2) * 4.0f, glm::cos(GetElapsedTime() * 2) * 4.0f);
+	ImGui::Begin("Control Panel", &mainWindowStart);
+	ImGui::Text("Light 01 Position");
+	ImGui::SliderFloat("Light01 X", &m_light01.position[0], 10.0f, -10.0f);
+	ImGui::SliderFloat("Light01 Y", &m_light01.position[1], 10.0f, -10.0f);
+	ImGui::SliderFloat("Light01 Z", &m_light01.position[2], 10.0f, -10.0f);
+	ImGui::Text("Light 01 Diffuse Colour");
+	ImGui::SliderFloat("Light01 Diffuse R", &m_light01.diffuse[0], 0.0f, 1.0f);
+	ImGui::SliderFloat("Light01 Diffuse G", &m_light01.diffuse[1], 0.0f, 1.0f);
+	ImGui::SliderFloat("Light01 Diffuse B", &m_light01.diffuse[2], 0.0f, 1.0f);
+	ImGui::Text("Light 01 Specular Colour");
+	ImGui::SliderFloat("Light01 Specular R", &m_light01.specular[0], 0.0f, 1.0f);
+	ImGui::SliderFloat("Light01 Specular G", &m_light01.specular[1], 0.0f, 1.0f);
+	ImGui::SliderFloat("Light01 Specular B", &m_light01.specular[2], 0.0f, 1.0f);
+
+	ImGui::Text("Light 02 Position");
+	ImGui::SliderFloat("Light02 X", &m_light02.position[0], 10.0f, -10.0f);
+	ImGui::SliderFloat("Light02 Y", &m_light02.position[1], 10.0f, -10.0f);
+	ImGui::SliderFloat("Light02 Z", &m_light02.position[2], 10.0f, -10.0f);
+	ImGui::Text("Light 02 Diffuse Colour");
+	ImGui::SliderFloat("Light02 Diffuse R", &m_light02.diffuse[0], 0.0f, 1.0f);
+	ImGui::SliderFloat("Light02 Diffuse G", &m_light02.diffuse[1], 0.0f, 1.0f);
+	ImGui::SliderFloat("Light02 Diffuse B", &m_light02.diffuse[2], 0.0f, 1.0f);
+	ImGui::Text("Light 02 Specular Colour");
+	ImGui::SliderFloat("Light02 Specular R", &m_light02.specular[0], 0.0f, 1.0f);
+	ImGui::SliderFloat("Light02 Specular G", &m_light02.specular[1], 0.0f, 1.0f);
+	ImGui::SliderFloat("Light02 Specular B", &m_light02.specular[2], 0.0f, 1.0f);
+	ImGui::End();
+
 	m_light01.direction = glm::normalize(m_light01.position);
-	m_light02.position = vec3(glm::cos(GetElapsedTime() * -3) * 5.0f, glm::sin(GetElapsedTime() * -3) * 5.0f, 0);
 	m_light02.direction = glm::normalize(m_light02.position);
-	//m_light01.direction = glm::normalize(vec3(2, -2 , -1));
-	//m_light02.direction = glm::normalize(vec3(-2, 0, 1));
+
 
 	myCam->Update(GetDeltaTime(), this);
 
